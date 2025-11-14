@@ -349,32 +349,32 @@ const ProductDetails: React.FC = () => {
                 {/* <Zap size={24} /> */}
                 Buy Now
               </motion.button>
-              {/* Selected EMI Plan Display */}
-              {selectedEMIPlan && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-green-50 border-2 border-green-200 p-4 rounded-lg"
-                >
-                  <p className="text-sm font-semibold text-green-800 mb-1">
-                    Selected EMI Plan:
-                  </p>
-                  <p className="text-lg font-bold text-slate-900">
-                    ₹
-                    {calculateMonthlyEMI(
-                      selectedProduct.price,
-                      selectedEMIPlan.interestRate,
-                      selectedEMIPlan.tenureMonths
-                    )}{" "}
-                    × {selectedEMIPlan.tenureMonths} months
-                  </p>
-                  <p className="text-sm text-slate-600">
-                    {selectedEMIPlan.interestRate}% interest • Cashback:{" "}
-                    {formatCashback(selectedEMIPlan.Cashback)}
-                  </p>
-                </motion.div>
-              )}
             </motion.div>
+            {/* Selected EMI Plan Display */}
+            {selectedEMIPlan && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-green-50 border-2 items-center flex flex-col justify-center border-green-200 p-4 rounded-lg"
+              >
+                <p className="text-sm font-semibold text-green-800 mb-1">
+                  Selected EMI Plan:
+                </p>
+                <p className="text-lg font-bold text-slate-900">
+                  ₹
+                  {calculateMonthlyEMI(
+                    selectedProduct.price,
+                    selectedEMIPlan.interestRate,
+                    selectedEMIPlan.tenureMonths
+                  )}{" "}
+                  × {selectedEMIPlan.tenureMonths} months
+                </p>
+                <p className="text-sm text-slate-600">
+                  {selectedEMIPlan.interestRate}% interest • Cashback:{" "}
+                  {formatCashback(selectedEMIPlan.Cashback)}
+                </p>
+              </motion.div>
+            )}
           </motion.div>
         </div>
 

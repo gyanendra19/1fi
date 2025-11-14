@@ -8,7 +8,7 @@ import {
 const route = express.Router();
 
 route.route("/emiByProduct").get(getEMIbyProductId);
-route.route("/insertEmi").post(insertEmiPlans);
+route.route("/insertMultipleEmi").post(insertEmiPlans);
 route.route("/createEmi").post(createEMI);
 
 export default route;

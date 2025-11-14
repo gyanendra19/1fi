@@ -34,8 +34,8 @@ A MERN stack application where users can browse products, explore EMI plans, and
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/nexora-commerce.git
-cd nexora-commerce
+git clone https://github.com/yourusername/1fi.git
+cd 1fi
 ```
 
 ### 2. Backend Setup

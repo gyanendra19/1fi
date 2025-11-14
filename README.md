@@ -77,6 +77,7 @@ npm run dev
 
 ## FOLDER STRUCTURE
 
+```
 MERN-EMI-Store/
 ├── Backend/
 │ ├── models/
@@ -99,6 +100,7 @@ MERN-EMI-Store/
 │ │ | ├── ProductDetails.tsx
 │ └── App.tsx
 └── index.css
+```
 
 ## API ENDPOINTS
 

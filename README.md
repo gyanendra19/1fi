@@ -115,6 +115,7 @@ MERN-EMI-Store/
 
 ## Example Product Response
 
+```
 {
 "_id": "691588ef7d312eb0a3dfcdee",
 "name": "iPhone 17 Pro",
@@ -148,15 +149,14 @@ MERN-EMI-Store/
 "annualReturnRate": 12,
 "riskLevel": "Moderate",
 "description": "A hybrid equity-debt fund offering stable growth with controlled volatility."
-}
-}
-]
-}
+}}]}
+```
 
 # Schemas
 
 ## Product Schema
 
+```
 {
 name: String,
 variant: String,
@@ -166,11 +166,12 @@ features: [String],
 imageUrl: [String],
 emiPlans: [
 { type: mongoose.Schema.Types.ObjectId, ref: "EmiPlan" }
-]
-}
+]}
+```
 
 ## EMI Schema
 
+```
 {
 productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
 monthlyAmount: Number,
@@ -179,15 +180,18 @@ interestRate: Number,
 Cashback: String,
 mutualFund: { type: mongoose.Schema.Types.ObjectId, ref: "MutualFund" }
 }
+```
 
 ## Mutual Fund Schema
 
+```
 {
 name: String,
 annualReturnRate: Number,
 riskLevel: String,
 description: String
 }
+```
 
 ## 🧠 How It Works
 

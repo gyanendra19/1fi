@@ -33,45 +33,45 @@ A MERN stack application where users can browse products, explore EMI plans, and
 
 ### 1. Clone Repository
 
-\`\`\`bash
+```bash
 git clone https://github.com/yourusername/nexora-commerce.git
 cd nexora-commerce
-\`\`\`
+```
 
 ### 2. Backend Setup
 
-\`\`\`bash
+```bash
 cd Backend
 npm install
-\`\`\`
+```
 
 #### Create .env
 
-\`\`\`bash
+```bash
 PORT=8000
 MONGO_URI=mongodb+srv://<your-mongo-uri>
-\`\`\`
+```
 
 #### Run Server
 
-\`\`\`bash
+```bash
 npm start
-\`\`\`
+```
 
 ---
 
 ### 3. Frontend Setup
 
-\`\`\`bash
+```bash
 cd ../Frontend
 npm install
-\`\`\`
+```
 
 #### Run Frontend
 
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 ---
 
@@ -99,13 +99,6 @@ MERN-EMI-Store/
 │ │ | ├── ProductDetails.tsx
 │ └── App.tsx
 └── index.css
-
-## TECH STACK USED
-
-1. FRONTEND - React, Tailwind, Framer Motion
-2. BACKEND - Node js, Express
-3. DB - MongoDB
-4. DEPLOYMENT - Render, Vercel
 
 ## API ENDPOINTS
 

@@ -3,6 +3,6 @@ import { createMutualFund } from "../controllers/mutualFundController.js";
 
 const route = express.Router();
 
-route.route("/createMutualFund").post(createMutualFund);
+route.route("/createMutualFund").post(createMutualFund); // CREATE MUTUAL FUND
 
 export default route;

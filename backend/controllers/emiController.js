@@ -1,5 +1,6 @@
 import EMI from "../models/emiModel.js";
 
+// CREATE EMIS
 export const createEMI = async (req, res) => {
   try {
     const { productId, monthlyAmount, tenureMonths, interestRate, Cashback } =
@@ -24,6 +25,7 @@ export const createEMI = async (req, res) => {
   }
 };
 
+// CREATE MULTIPLE EMIs AT ONCE
 export const insertEmiPlans = async (req, res) => {
   try {
     const emiPlans = req.body.emiPlans;
@@ -43,6 +45,7 @@ export const insertEmiPlans = async (req, res) => {
   }
 };
 
+// GET EMI BY PRODUCT ID
 export const getEMIbyProductId = async (req, res) => {
   try {
     const { productId } = req.params;

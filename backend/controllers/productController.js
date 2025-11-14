@@ -1,5 +1,6 @@
 import Product from "../models/productModel.js";
 
+// ADD PRODUCTS TO THE DB
 export const createProduct = async (req, res) => {
   try {
     const { name, variant, MRP, price, imageUrl, features } = req.body;
@@ -24,6 +25,7 @@ export const createProduct = async (req, res) => {
   }
 };
 
+// GET ALL THE PRODUCTS WITH EMI PLANS AND MUTUAL FUNDS
 export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find().populate({
@@ -44,6 +46,7 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
+// GET PRODUCT BY NAME
 export const getProductByName = async (req, res) => {
   try {
     const { productName } = req.params;

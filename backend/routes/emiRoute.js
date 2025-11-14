@@ -7,8 +7,8 @@ import {
 
 const route = express.Router();
 
-route.route("/emiByProduct").get(getEMIbyProductId);
-route.route("/insertMultipleEmi").post(insertEmiPlans);
-route.route("/createEmi").post(createEMI);
+route.route("/emiByProduct").get(getEMIbyProductId); // GET EMI BT PRODUCT ID
+route.route("/insertMultipleEmi").post(insertEmiPlans); // CREATE MULTIPLE EMIS
+route.route("/createEmi").post(createEMI); // CREATE A SINGLE EMI
 
 export default route;

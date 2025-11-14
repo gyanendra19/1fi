@@ -33,50 +33,51 @@ A MERN stack application where users can browse products, explore EMI plans, and
 
 ### 1. Clone Repository
 
-\`\`\`bash
-git clone https://github.com/yourusername/nexora-commerce.git
-cd nexora-commerce
-\`\`\`
+```bash
+git clone https://github.com/yourusername/1fi.git
+cd 1fi
+```
 
 ### 2. Backend Setup
 
-\`\`\`bash
+```bash
 cd Backend
 npm install
-\`\`\`
+```
 
 #### Create .env
 
-\`\`\`bash
+```bash
 PORT=8000
 MONGO_URI=mongodb+srv://<your-mongo-uri>
-\`\`\`
+```
 
 #### Run Server
 
-\`\`\`bash
+```bash
 npm start
-\`\`\`
+```
 
 ---
 
 ### 3. Frontend Setup
 
-\`\`\`bash
+```bash
 cd ../Frontend
 npm install
-\`\`\`
+```
 
 #### Run Frontend
 
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 ---
 
 ## FOLDER STRUCTURE
 
+```
 MERN-EMI-Store/
 ├── Backend/
 │ ├── models/
@@ -99,13 +100,7 @@ MERN-EMI-Store/
 │ │ | ├── ProductDetails.tsx
 │ └── App.tsx
 └── index.css
-
-## TECH STACK USED
-
-1. FRONTEND - React, Tailwind, Framer Motion
-2. BACKEND - Node js, Express
-3. DB - MongoDB
-4. DEPLOYMENT - Render, Vercel
+```
 
 ## API ENDPOINTS
 
@@ -120,6 +115,7 @@ MERN-EMI-Store/
 
 ## Example Product Response
 
+```
 {
 "_id": "691588ef7d312eb0a3dfcdee",
 "name": "iPhone 17 Pro",
@@ -153,15 +149,14 @@ MERN-EMI-Store/
 "annualReturnRate": 12,
 "riskLevel": "Moderate",
 "description": "A hybrid equity-debt fund offering stable growth with controlled volatility."
-}
-}
-]
-}
+}}]}
+```
 
 # Schemas
 
 ## Product Schema
 
+```
 {
 name: String,
 variant: String,
@@ -171,11 +166,12 @@ features: [String],
 imageUrl: [String],
 emiPlans: [
 { type: mongoose.Schema.Types.ObjectId, ref: "EmiPlan" }
-]
-}
+]}
+```
 
 ## EMI Schema
 
+```
 {
 productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
 monthlyAmount: Number,
@@ -184,15 +180,18 @@ interestRate: Number,
 Cashback: String,
 mutualFund: { type: mongoose.Schema.Types.ObjectId, ref: "MutualFund" }
 }
+```
 
 ## Mutual Fund Schema
 
+```
 {
 name: String,
 annualReturnRate: Number,
 riskLevel: String,
 description: String
 }
+```
 
 ## 🧠 How It Works
 

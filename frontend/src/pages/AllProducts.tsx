@@ -52,6 +52,7 @@ const AllProducts: React.FC = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
+        // Fetching all the products
         const res = await axios.get(
           "https://onefi-a5xm.onrender.com/api/products"
         );
@@ -66,7 +67,6 @@ const AllProducts: React.FC = () => {
     };
     fetchProducts();
   }, []);
-  console.log(loading);
 
   // Group products by name and get the first variant of each
   const groupedProducts = useMemo<GroupedProduct[]>(() => {
@@ -159,6 +159,7 @@ const AllProducts: React.FC = () => {
     return `₹${price.toLocaleString("en-IN")}`;
   };
 
+  // Loader
   if (loading) {
     return (
       <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 flex items-center justify-center">

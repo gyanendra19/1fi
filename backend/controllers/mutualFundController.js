@@ -1,5 +1,6 @@
 import MutualFund from "../models/mutualFundModel.js";
 
+// CREATE MUTUAL FUNDS
 export const createMutualFund = async (req, res) => {
   try {
     const { emiId, name, annualReturnRate, riskLevel, description } = req.body;

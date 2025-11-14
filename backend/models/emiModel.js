@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// EMI SCHEMA
 const emiSchema = new mongoose.Schema({
   productId: {
     type: mongoose.Schema.Types.ObjectId,

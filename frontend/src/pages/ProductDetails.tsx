@@ -50,12 +50,12 @@ const ProductDetails: React.FC = () => {
   const [expandedEMI, setExpandedEMI] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedEMIPlan, setSelectedEMIPlan] = useState<EMIPlan | null>(null);
-  // const [quantity, setQuantity] = useState(1);
   const { productName } = useParams();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        // FETCHING SINGLE PRODUCT FOR DETAILS PAGE
         const response = await fetch(
           `https://onefi-a5xm.onrender.com/api/products/singleProduct/${productName}`
         );
@@ -91,6 +91,7 @@ const ProductDetails: React.FC = () => {
     return String(cashback);
   };
 
+  // Calculate montly amount for the EMI
   function calculateMonthlyEMI(
     totalPrice: number,
     annualInterestRate: number,
@@ -112,6 +113,7 @@ const ProductDetails: React.FC = () => {
     return emi.toFixed(2);
   }
 
+  // Variants for Animations
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

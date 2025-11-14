@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import { Heart, Loader, ShoppingCart } from "lucide-react";
+import { Heart, Loader, ShoppingCart, Sparkles } from "lucide-react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -68,7 +68,6 @@ const AllProducts: React.FC = () => {
     fetchProducts();
   }, []);
 
-  // Group products by name and get the first variant of each
   const groupedProducts = useMemo<GroupedProduct[]>(() => {
     const grouped: { [key: string]: Product[] } = {};
 
@@ -102,7 +101,7 @@ const AllProducts: React.FC = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }, // cubic-bezier for easeOut
+      transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
     },
     hover: {
       y: -8,
@@ -159,35 +158,65 @@ const AllProducts: React.FC = () => {
     return `₹${price.toLocaleString("en-IN")}`;
   };
 
-  // Loader
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-indigo-950 via-purple-900 to-slate-900 flex items-center justify-center">
         <motion.p
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 2 }}
         >
-          <Loader className="w-12 h-12 text-blue-600" />
+          <Loader className="w-12 h-12 text-purple-400" />
         </motion.p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 p-4 md:p-8">
+    <div className="min-h-screen bg-linear-to-br from-indigo-950 via-purple-900 to-slate-900 p-4 md:p-8 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute bottom-20 left-20 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl"
+        />
+      </div>
+
       <motion.div
-        className="max-w-7xl mx-auto"
+        className="max-w-7xl mx-auto relative z-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
         <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-3">
-            Featured Products
-          </h1>
-          <div className="h-1 w-20 bg-linear-to-r from-blue-500 to-purple-500 rounded-full"></div>
-          <p className="text-slate-600 mt-4">
-            {groupedProducts.length} unique products available
+          <div className="flex items-center gap-3 mb-3">
+            <Sparkles className="w-8 h-8 text-yellow-400" />
+            <h1 className="text-4xl md:text-5xl font-bold bg-linear-to-r from-purple-200 via-pink-200 to-indigo-200 bg-clip-text text-transparent">
+              Featured Products
+            </h1>
+          </div>
+          <div className="h-1 w-24 bg-linear-to-r from-purple-400 via-pink-400 to-indigo-400 rounded-full"></div>
+          <p className="text-purple-200 mt-4 text-lg">
+            {groupedProducts.length} premium products available
           </p>
         </div>
 
@@ -196,15 +225,15 @@ const AllProducts: React.FC = () => {
             <motion.div
               key={baseProduct._id}
               variants={cardVariants}
-              initial="hidden" // corresponds to cardVariants.hidden
+              initial="hidden"
               animate="visible"
               whileHover="hover"
               className="group cursor-pointer"
             >
-              <div className="h-full bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+              <div className="h-full bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 flex flex-col border border-purple-500/20">
                 {/* Image Container */}
                 <div
-                  className="relative h-72 bg-slate-100 overflow-hidden"
+                  className="relative h-72 bg-slate-700/30 overflow-hidden"
                   onMouseEnter={() => setHoveredId(baseProduct._id)}
                   onMouseLeave={() => setHoveredId(null)}
                 >
@@ -222,6 +251,9 @@ const AllProducts: React.FC = () => {
                     transition={{ duration: 0.3 }}
                   />
 
+                  {/* linear overlay */}
+                  <div className="absolute inset-0 bg-linear-to-t from-slate-900/50 via-transparent to-transparent" />
+
                   {/* Discount Badge */}
                   <div className="absolute top-4 left-4 bg-linear-to-r from-red-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                     -{discount(baseProduct)}%
@@ -229,7 +261,7 @@ const AllProducts: React.FC = () => {
 
                   {/* Variant Badge */}
                   {variantCount > 1 && (
-                    <div className="absolute top-4 right-4 bg-linear-to-r from-purple-500 to-indigo-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                    <div className="absolute top-4 right-4 bg-linear-to-r from-purple-500 to-indigo-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg backdrop-blur-sm">
                       +{variantCount - 1} variant{variantCount > 2 ? "s" : ""}
                     </div>
                   )}
@@ -242,14 +274,14 @@ const AllProducts: React.FC = () => {
                       e.stopPropagation();
                       toggleWishlist(baseProduct._id);
                     }}
-                    className="absolute bottom-4 right-4 bg-white rounded-full p-2.5 shadow-lg hover:bg-slate-100 transition-colors"
+                    className="absolute bottom-4 right-4 bg-slate-800/80 backdrop-blur-md rounded-full p-2.5 shadow-lg hover:bg-slate-700/80 transition-colors border border-purple-500/20"
                   >
                     <Heart
                       size={20}
                       className={
                         wishlist.has(baseProduct._id)
                           ? "fill-red-500 text-red-500"
-                          : "text-slate-400"
+                          : "text-purple-300"
                       }
                     />
                   </motion.button>
@@ -265,10 +297,10 @@ const AllProducts: React.FC = () => {
                             e.stopPropagation();
                             handleImageNavigation(baseProduct._id, "prev");
                           }}
-                          className="bg-white rounded-full p-2 shadow-lg hover:bg-slate-100 transition-colors"
+                          className="bg-slate-800/80 backdrop-blur-md rounded-full p-2 shadow-lg hover:bg-slate-700/80 transition-colors border border-purple-500/20"
                         >
                           <svg
-                            className="w-5 h-5"
+                            className="w-5 h-5 text-purple-200"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -288,10 +320,10 @@ const AllProducts: React.FC = () => {
                             e.stopPropagation();
                             handleImageNavigation(baseProduct._id, "next");
                           }}
-                          className="bg-white rounded-full p-2 shadow-lg hover:bg-slate-100 transition-colors"
+                          className="bg-slate-800/80 backdrop-blur-md rounded-full p-2 shadow-lg hover:bg-slate-700/80 transition-colors border border-purple-500/20"
                         >
                           <svg
-                            className="w-5 h-5"
+                            className="w-5 h-5 text-purple-200"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -315,8 +347,8 @@ const AllProducts: React.FC = () => {
                           key={idx}
                           className={`h-2 rounded-full transition-all ${
                             idx === (imageIndices[baseProduct._id] || 0)
-                              ? "w-6 bg-white"
-                              : "w-2 bg-white bg-opacity-60"
+                              ? "w-6 bg-purple-400"
+                              : "w-2 bg-purple-400 bg-opacity-40"
                           }`}
                         />
                       ))}
@@ -325,23 +357,23 @@ const AllProducts: React.FC = () => {
                 </div>
 
                 {/* Content Container */}
-                <div className="p-4 flex flex-col gap-3 grow">
+                <div className="p-5 flex flex-col gap-3 grow">
                   {/* Product Name */}
                   <div className="flex-1">
-                    <h3 className="font-bold text-lg text-slate-900 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                    <h3 className="font-bold text-lg text-purple-100 line-clamp-2 group-hover:text-purple-300 transition-colors">
                       {baseProduct.name}
                     </h3>
-                    <p className="text-sm text-slate-500 mt-1 line-clamp-1">
+                    <p className="text-sm text-purple-300/70 mt-1 line-clamp-1">
                       {baseProduct.variant}
                     </p>
                   </div>
 
                   {/* Price Section */}
                   <div className="flex items-baseline gap-3">
-                    <span className="text-2xl font-bold text-slate-900">
+                    <span className="text-2xl font-bold bg-linear-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent">
                       {formatPrice(baseProduct.price)}
                     </span>
-                    <span className="text-sm text-slate-400 line-through">
+                    <span className="text-sm text-purple-400/60 line-through">
                       {formatPrice(baseProduct.MRP)}
                     </span>
                   </div>
@@ -349,7 +381,7 @@ const AllProducts: React.FC = () => {
                   {/* Add to Cart Button */}
                   <Link
                     to={`/product/${baseProduct.name}`}
-                    className="w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:scale-105"
+                    className="w-full bg-linear-to-r from-purple-600 via-pink-600 to-indigo-600 hover:from-purple-500 hover:via-pink-500 hover:to-indigo-500 text-white font-semibold py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-purple-500/50 hover:scale-105 border border-purple-400/20"
                   >
                     <ShoppingCart size={18} />
                     View Details
@@ -362,7 +394,7 @@ const AllProducts: React.FC = () => {
 
         {groupedProducts.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-slate-500 text-lg">No products available</p>
+            <p className="text-purple-300 text-lg">No products available</p>
           </div>
         )}
       </motion.div>

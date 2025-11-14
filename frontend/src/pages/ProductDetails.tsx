@@ -10,6 +10,7 @@ import {
   ChevronDown,
   ChevronUp,
   Loader,
+  Sparkles,
 } from "lucide-react";
 import { useParams } from "react-router-dom";
 
@@ -129,12 +130,12 @@ const ProductDetails: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-indigo-950 via-purple-900 to-slate-900 flex items-center justify-center">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ repeat: Infinity, duration: 2 }}
         >
-          <Loader className="w-12 h-12 text-blue-600" />
+          <Loader className="w-12 h-12 text-purple-400" />
         </motion.div>
       </div>
     );
@@ -142,24 +143,52 @@ const ProductDetails: React.FC = () => {
 
   if (!selectedProduct) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 flex items-center justify-center">
-        <p className="text-2xl text-slate-600">Product not found</p>
+      <div className="min-h-screen bg-linear-to-br from-indigo-950 via-purple-900 to-slate-900 flex items-center justify-center">
+        <p className="text-2xl text-purple-300">Product not found</p>
       </div>
     );
   }
 
   return (
     <motion.div
-      className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 py-8 px-4"
+      className="min-h-screen bg-linear-to-br from-indigo-950 via-purple-900 to-slate-900 py-8 px-4 relative overflow-hidden"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <div className="max-w-7xl mx-auto">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute top-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute bottom-20 left-20 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl"
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Left: Image Section */}
           <motion.div variants={itemVariants} className="flex flex-col gap-4">
-            <div className="relative bg-white rounded-xl overflow-hidden shadow-lg">
+            <div className="relative bg-slate-800/90 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl border border-purple-500/20">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={selectedImage}
@@ -178,21 +207,21 @@ const ProductDetails: React.FC = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsWishlisted(!isWishlisted)}
-                className="absolute top-4 right-4 bg-white rounded-full p-3 shadow-lg hover:bg-slate-100 transition-colors"
+                className="absolute top-6 right-6 bg-slate-800/80 backdrop-blur-md rounded-full p-3 shadow-lg hover:bg-slate-700/80 transition-colors border border-purple-500/20"
               >
                 <Heart
                   size={24}
                   className={
                     isWishlisted
                       ? "fill-red-500 text-red-500"
-                      : "text-slate-400"
+                      : "text-purple-300"
                   }
                 />
               </motion.button>
 
               {/* Discount Badge */}
               {discount(selectedProduct) !== 0 && (
-                <div className="absolute top-4 left-4 bg-linear-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                <div className="absolute top-6 left-6 bg-linear-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
                   {discount(selectedProduct)}% off
                 </div>
               )}
@@ -206,17 +235,19 @@ const ProductDetails: React.FC = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setSelectedImage(idx)}
-                  className={`shrink-0 w-24 h-24 rounded-lg overflow-hidden border-2 transition-all ${
+                  className={`shrink-0 w-24 h-24 rounded-xl overflow-hidden border-2 transition-all backdrop-blur-sm ${
                     selectedImage === idx
-                      ? "border-blue-600 shadow-lg"
-                      : "border-slate-200"
+                      ? "border-purple-500 shadow-lg shadow-purple-500/30"
+                      : "border-purple-500/30"
                   }`}
                 >
-                  <img
-                    src={img}
-                    alt={`Thumbnail ${idx}`}
-                    className="w-full h-full object-contain p-2"
-                  />
+                  <div className="w-full h-full bg-slate-700/50 flex items-center justify-center">
+                    <img
+                      src={img}
+                      alt={`Thumbnail ${idx}`}
+                      className="w-full h-full object-contain p-2"
+                    />
+                  </div>
                 </motion.button>
               ))}
             </div>
@@ -226,9 +257,12 @@ const ProductDetails: React.FC = () => {
           <motion.div variants={itemVariants} className="flex flex-col gap-6">
             {/* Title and Rating */}
             <div>
-              <motion.h1 className="text-4xl font-bold text-slate-900 mb-2">
-                {selectedProduct.name}
-              </motion.h1>
+              <div className="flex items-center gap-3 mb-3">
+                <Sparkles className="w-6 h-6 text-yellow-400" />
+                <motion.h1 className="text-4xl font-bold bg-linear-to-r from-purple-200 via-pink-200 to-indigo-200 bg-clip-text text-transparent">
+                  {selectedProduct.name}
+                </motion.h1>
+              </div>
               <div className="flex items-center gap-2 mb-3">
                 <div className="flex gap-1">
                   {[...Array(5)].map((_, i) => (
@@ -239,25 +273,25 @@ const ProductDetails: React.FC = () => {
                     />
                   ))}
                 </div>
-                <span className="text-slate-600">(2,543 reviews)</span>
+                <span className="text-purple-300/80">(2,543 reviews)</span>
               </div>
-              <p className="text-slate-600 text-lg">
+              <p className="text-purple-300/70 text-lg">
                 {selectedProduct.variant}
               </p>
             </div>
 
             {/* Price Section */}
-            <motion.div className="bg-white p-6 rounded-xl shadow-lg">
+            <motion.div className="bg-slate-800/90 backdrop-blur-xl p-6 rounded-2xl shadow-2xl border border-purple-500/20">
               <div className="flex items-end gap-4 mb-4">
-                <span className="text-4xl font-bold text-slate-900">
+                <span className="text-4xl font-bold bg-linear-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent">
                   {formatPrice(selectedProduct.price)}
                 </span>
-                <span className="text-2xl text-slate-400 line-through">
+                <span className="text-2xl text-purple-400/60 line-through">
                   {formatPrice(selectedProduct.MRP)}
                 </span>
               </div>
               {selectedProduct.MRP - selectedProduct.price !== 0 && (
-                <p className="text-green-600 font-semibold text-lg">
+                <p className="text-green-400 font-semibold text-lg">
                   Save{" "}
                   {formatPrice(selectedProduct.MRP - selectedProduct.price)}
                 </p>
@@ -266,8 +300,8 @@ const ProductDetails: React.FC = () => {
 
             {/* Variant Selector */}
             {products.length > 1 && (
-              <motion.div className="bg-white p-6 rounded-xl shadow-lg">
-                <h3 className="font-bold text-lg text-slate-900 mb-4">
+              <motion.div className="bg-slate-800/90 backdrop-blur-xl p-6 rounded-2xl shadow-2xl border border-purple-500/20">
+                <h3 className="font-bold text-lg text-purple-200 mb-4">
                   Select Variant
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
@@ -280,14 +314,14 @@ const ProductDetails: React.FC = () => {
                         setSelectedProduct(product);
                         setSelectedImage(0);
                       }}
-                      className={`p-4 rounded-lg border-2 transition-all text-sm font-semibold ${
+                      className={`p-4 rounded-xl border-2 transition-all text-sm font-semibold ${
                         selectedProduct._id === product._id
-                          ? "border-blue-600 bg-blue-50 text-blue-600"
-                          : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+                          ? "border-purple-500 bg-purple-500/20 text-purple-200"
+                          : "border-purple-500/30 bg-slate-700/50 text-purple-300 hover:border-purple-400/50"
                       }`}
                     >
                       <div>{product.variant}</div>
-                      <div className="text-xs mt-2">
+                      <div className="text-xs mt-2 text-purple-300/80">
                         {formatPrice(product.price)}
                       </div>
                     </motion.button>
@@ -322,13 +356,13 @@ const ProductDetails: React.FC = () => {
               ].map((benefit, i) => (
                 <motion.div
                   key={i}
-                  className="bg-white p-4 rounded-lg shadow-md"
+                  className="bg-slate-800/90 backdrop-blur-xl p-4 rounded-xl shadow-lg border border-purple-500/20"
                 >
-                  <benefit.icon className="w-6 h-6 text-blue-600 mb-2" />
-                  <p className="font-semibold text-sm text-slate-900">
+                  <benefit.icon className="w-6 h-6 text-purple-400 mb-2" />
+                  <p className="font-semibold text-sm text-purple-200">
                     {benefit.title}
                   </p>
-                  <p className="text-xs text-slate-600">{benefit.desc}</p>
+                  <p className="text-xs text-purple-300/70">{benefit.desc}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -338,7 +372,7 @@ const ProductDetails: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex-1 bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-slate-900 font-bold py-4 rounded-lg shadow-lg flex items-center justify-center gap-2 text-lg"
+                className="flex-1 bg-linear-to-r from-purple-600 via-pink-600 to-indigo-600 hover:from-purple-500 hover:via-pink-500 hover:to-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-purple-500/50 flex items-center justify-center gap-2 text-lg border border-purple-400/20"
               >
                 <ShoppingCart size={24} />
                 Add to Cart
@@ -346,23 +380,23 @@ const ProductDetails: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex-1 bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 rounded-lg shadow-lg flex items-center justify-center gap-2 text-lg"
+                className="flex-1 bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-slate-900 font-bold py-4 rounded-xl shadow-lg hover:shadow-yellow-500/50 flex items-center justify-center gap-2 text-lg border border-yellow-400/20"
               >
-                {/* <Zap size={24} /> */}
                 Buy Now
               </motion.button>
             </motion.div>
+
             {/* Selected EMI Plan Display */}
             {selectedEMIPlan && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-green-50 border-2 items-center flex flex-col justify-center border-green-200 p-4 rounded-lg"
+                className="bg-green-500/20 backdrop-blur-xl border-2 border-green-400/30 p-4 rounded-xl"
               >
-                <p className="text-sm font-semibold text-green-800 mb-1">
+                <p className="text-sm font-semibold text-green-300 mb-1">
                   Selected EMI Plan:
                 </p>
-                <p className="text-lg font-bold text-slate-900">
+                <p className="text-lg font-bold text-purple-100">
                   ₹
                   {calculateMonthlyEMI(
                     selectedProduct.price,
@@ -371,7 +405,7 @@ const ProductDetails: React.FC = () => {
                   )}{" "}
                   × {selectedEMIPlan.tenureMonths} months
                 </p>
-                <p className="text-sm text-slate-600">
+                <p className="text-sm text-purple-300/80">
                   {selectedEMIPlan.interestRate}% interest • Cashback:{" "}
                   {formatCashback(selectedEMIPlan.Cashback)}
                 </p>
@@ -387,8 +421,8 @@ const ProductDetails: React.FC = () => {
         >
           {/* Left: Key Features */}
           <div className="lg:col-span-2">
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <h2 className="text-2xl font-bold text-slate-900 mb-6">
+            <div className="bg-slate-800/90 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-purple-500/20">
+              <h2 className="text-2xl font-bold bg-linear-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent mb-6">
                 Key Features
               </h2>
               <div className="space-y-4">
@@ -398,12 +432,12 @@ const ProductDetails: React.FC = () => {
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.1 }}
-                    className="flex gap-4 pb-4 border-b border-slate-100 last:border-b-0"
+                    className="flex gap-4 pb-4 border-b border-purple-500/20 last:border-b-0"
                   >
-                    <div className="shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                      <Star size={16} className="text-blue-600" />
+                    <div className="shrink-0 w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center border border-purple-500/30">
+                      <Star size={16} className="text-purple-400" />
                     </div>
-                    <p className="text-slate-700">{feature}</p>
+                    <p className="text-purple-200">{feature}</p>
                   </motion.div>
                 ))}
               </div>
@@ -411,9 +445,12 @@ const ProductDetails: React.FC = () => {
           </div>
 
           {/* Right: EMI Plans */}
-          <div className="bg-white p-8 rounded-xl shadow-lg h-fit">
-            <h3 className="text-xl font-bold text-slate-900 mb-1">EMI Plans</h3>
-            <p className="text-sm text-slate-600 mb-4">
+          <div className="bg-slate-800/90 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-purple-500/20 h-fit">
+            <div className="flex items-center gap-2 mb-1">
+              <Sparkles className="w-5 h-5 text-purple-400" />
+              <h3 className="text-xl font-bold text-purple-200">EMI Plans</h3>
+            </div>
+            <p className="text-sm text-purple-300/70 mb-4">
               Backed by Mutual Funds
             </p>
 
@@ -424,11 +461,11 @@ const ProductDetails: React.FC = () => {
                   onClick={() =>
                     setExpandedEMI(expandedEMI === plan._id ? null : plan._id)
                   }
-                  className="w-full text-left bg-slate-50 hover:bg-slate-100 p-4 rounded-lg transition-all"
+                  className="w-full text-left bg-slate-700/50 hover:bg-slate-700/70 p-4 rounded-xl transition-all border border-purple-500/20"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-bold text-slate-900">
+                      <p className="font-bold text-purple-100">
                         ₹
                         {calculateMonthlyEMI(
                           selectedProduct.price,
@@ -437,14 +474,14 @@ const ProductDetails: React.FC = () => {
                         )}{" "}
                         × {plan.tenureMonths}M
                       </p>
-                      <p className="text-sm text-slate-600">
+                      <p className="text-sm text-purple-300/70">
                         {plan.interestRate}% interest
                       </p>
                     </div>
                     {expandedEMI === plan._id ? (
-                      <ChevronUp size={20} />
+                      <ChevronUp size={20} className="text-purple-400" />
                     ) : (
-                      <ChevronDown size={20} />
+                      <ChevronDown size={20} className="text-purple-400" />
                     )}
                   </div>
 
@@ -454,15 +491,15 @@ const ProductDetails: React.FC = () => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="mt-3 pt-3 border-t border-slate-200 space-y-2"
+                        className="mt-3 pt-3 border-t border-purple-500/20 space-y-2"
                       >
-                        <p className="text-sm text-green-600 font-semibold">
+                        <p className="text-sm text-green-400 font-semibold">
                           Cashback: {formatCashback(plan.Cashback)}
                         </p>
-                        <p className="text-xs text-slate-600">
+                        <p className="text-xs text-purple-300/80">
                           {plan.mutualFund.name}
                         </p>
-                        <p className="text-xs text-slate-600">
+                        <p className="text-xs text-purple-300/80">
                           {plan.mutualFund.annualReturnRate}% annual return
                         </p>
                         <motion.button
@@ -472,10 +509,10 @@ const ProductDetails: React.FC = () => {
                             e.stopPropagation();
                             setSelectedEMIPlan(plan);
                           }}
-                          className={`w-full mt-3 py-2 rounded-lg font-semibold text-sm transition-all ${
+                          className={`w-full mt-3 py-2 rounded-lg font-semibold text-sm transition-all border ${
                             selectedEMIPlan?._id === plan._id
-                              ? "bg-blue-600 text-white"
-                              : "bg-blue-100 text-blue-600 hover:bg-blue-200"
+                              ? "bg-purple-600 text-white border-purple-500"
+                              : "bg-purple-500/20 text-purple-200 border-purple-500/30 hover:bg-purple-500/30"
                           }`}
                         >
                           {selectedEMIPlan?._id === plan._id
